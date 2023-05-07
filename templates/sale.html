@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block script %}
+<script>
+    function stop_bid(id) {
+        
+        $.ajax({
+            url: '/stopbid',
+            method: 'POST',
+            data: JSON.stringify({ "id": id, "price": "" }),
+            contentType: 'application/json',
+            success: function (data, txtStatus, xhr) {
+                window.location = "/sale";
+            },
+            error: function (e) {
+            }
+        })
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <table class="table table-light table-borderless table-hover text-center mb-0">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Products</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th># of Wish</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+                    {% for product in products %}
+                    <tr>
+                        <td class="align-middle" onclick="window.location='/detail?id={{ product.id }}'"><img src="{{ product.image }}" alt="" style="width: 50px;">{{ product.name }}
+                        </td>
+                        <td class="align-middle">${{ product.price }}</td>
+                        <td class="align-middle"><button class="btn btn-primary" onclick="stop_bid('{{ product.id }}')">
+                            {{ "In Progress" if product.auction else "Purchased" }}</button></td>
+                        <td class="align-middle">{{ product.wish_cnt }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">History</span></h5>
+            <div class="bg-light p-30 mb-5">
+                <div class="pb-2">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h6>Subtotal</h6>
+                        <h6>${{ products | sum(attribute='price') }}</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">$20</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart End -->
+{% endblock %}

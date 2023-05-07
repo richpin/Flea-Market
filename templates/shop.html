@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container-fluid pt-5 pb-3">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">{{ category }} Products</span></h2>
+        <div class="row px-xl-5">
+            {% for product in products %}
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <div class="product-item bg-light mb-4">
+                    <div class="product-img position-relative overflow-hidden" style="height: 400px">
+                        <img class="img-fluid w-100" src= "{{ product.image }}" alt="">
+                        <div class="product-action">
+                            <a class="btn btn-outline-dark btn-square" href="/put_cart?id={{ product.id }}"><i class="fa fa-shopping-cart"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="/put_wish?id={{ product.id }}"><i class="far fa-heart"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="/detail?id={{ product.id }}"><i class="fa fa-search"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center py-4">
+                        <a class="h6 text-decoration-none text-truncate">{{ product.name }}</a>
+                        <div class="d-flex flex-column align-items-center justify-content-center mt-2">
+                            <h5>${{ product.price }}  </h5>
+                            <h3 class="btn btn-primary">{{ "In Progress" if product.auction else "Purchased" }}</h3>
+                            <h6 class="text-muted ml-2">{{ product.place }} to shipping</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

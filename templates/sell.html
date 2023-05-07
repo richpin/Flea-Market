@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $("#Form").submit(e => {
+            e.preventDefault();
+            var data = new FormData(e.target)
+
+            $.ajax({
+                url: "./upload",
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (data, txtStatus, xhr) {
+                    window.location = "/sale";
+                },
+                error: function (e) {
+                    alert("Upload Failed");
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+ <!-- Contact Start -->
+ <div class="container-fluid">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sell a Product</span></h2>
+    <div class="row px-xl-5">
+        <div class="col-lg-7 mb-5">
+            <div class="contact-form bg-light p-30">
+                <div id="success"></div>
+                <form name="Form" id="Form" enctype="multipart/form-data">
+                    <div>
+                        <label style="font-size: 18px; margin-bottom: 20px;">Category : </label>
+                        <select name="category" id="category">
+                            <option value="0">Electronics</option>
+                            <option value="1">Motors</option>
+                            <option value="2">Fashion</option>
+                            <option value="3">Book</option>
+                            <option value="4">Art</option>
+                            <option value="5">Sports</option>
+                            <option value="6">Health&Beauty</option>
+                            <option value="7">Home&Plants</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <input type="file" class="form-control" id="image" name="image"
+                            required="required" data-validation-required-message="Please enter your name" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" class="form-control" id="name" placeholder="Product Name" name="name"
+                            required="required" data-validation-required-message="Please enter your name" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <input type="number" class="form-control" id="price" value="0" name="price"
+                            required="required" data-validation-required-message="Please enter your email" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" class="form-control" id="trading" placeholder="Trading Place" name="trading"
+                            required="required" data-validation-required-message="Please enter a subject" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <textarea class="form-control" rows="8" id="description" placeholder="Description" name="description"
+                            required="required"
+                            data-validation-required-message="Please enter your message"></textarea>
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary py-2 px-4" type="submit" id="button">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div> 
+    </div>
+</div>
+<!-- Contact End -->
+
+{% endblock %}

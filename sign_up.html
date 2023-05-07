@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Multishop - Sign Up</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- icon -->
+	<link href="https://firebasestorage.googleapis.com/v0/b/fleamarket-baab1.appspot.com/o/shopping-cart.png?alt=media&token=83f60cac-daf8-4a3c-8601-ed79c7f8a9e4" rel="shortcut icon" type="image/x-icon">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+	<!-- Jquery -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#btn_signup").click(function(event){
+				event.preventDefault(); // prevent automatic GET Request with parameter
+				var username = $("#username").val();
+				var password = $("#password").val();
+				var password_check = $("#password_check").val();
+				
+				if (password != password_check) {
+					$("#result").html("Passwords are different!");
+					return;
+				}
+			
+				var nickname = $("#nickname").val();
+				var phone = $("#phone_number").val();
+
+				var data = {"username" : username, "password": password, "phone": phone, "nickname": nickname};
+
+				$.ajax({
+					url: "./register",
+					type: "POST",
+					contentType: "application/json",
+					data: JSON.stringify(data),
+					success: function(data, txtStatus, xhr) {
+						window.location = "/";
+					},
+					error: function(e) {
+						if(e.d)
+						$("#result").html("Register Failed");
+					}
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form">
+					<span class="login100-form-title p-b-26">
+						Create Account
+					</span>
+					<span class="login100-form-title p-b-48">
+						<p id="result"></p>
+					</span>
+					
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
+						<p style="font-size: 15px;">Name</p>
+						<input class="input100" type="text" name="nickname" id="nickname">
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
+						<p style="font-size: 15px;">ID</p>
+						<input class="input100" type="text" name="username" id="username">
+					</div>
+
+					<div class="wrap-input100">
+						<p style="font-size: 15px;">Password</p>
+						<input class="input100" type="password" name="password" id="password">
+					</div>
+
+					<div class="wrap-input100">
+						<p style="font-size: 15px;">Password Check</p>
+						<input class="input100" type="password" name="password_check" id="password_check">
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<p style="font-size: 15px;">Phone Number</p>
+						<input class="input100" type="text" name="phone_number" id="phone_number">
+					</div>
+
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" id="btn_signup">
+								Sign Up
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+</body>
+</html>
